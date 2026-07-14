@@ -158,7 +158,6 @@ All writes go through `vscode.workspace.fs.writeFile` targeting only the `.coden
 
 ```bash
 git clone https://github.com/yashmangla007/CodeNotes.git
-cd CodeNotes/codenotes-extension
 npm install
 npm run compile
 ```
