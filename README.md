@@ -47,8 +47,8 @@ All annotations are stored in a `.codenotes/` folder inside your workspace, comp
 ## Demo
 | Hover Notes | Draw Mode |
 |---|---|
-| ![HoverNotes Demo Image](HoverNoteDemo.png) | ![Explanotory Drawings over the Code](DrawToolDemo-1.png) |
-| ![Side bar CodeNotes File Listings](sideBarNotes.png) | ![Drawings and Shapes over your Code](annotationShowcase.png) |
+| ![HoverNotes Demo Image](demoMedia/HoverNoteDemo.png) | ![Explanotory Drawings over the Code](demoMedia/DrawToolDemo.png) |
+| ![Side bar CodeNotes File Listings](demoMedia/sideBarNotes.png) | ![Drawings and Shapes over your Code](annotationShowcase.png) |
 
 ---
 
