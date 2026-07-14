@@ -8,27 +8,30 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#)
 
 ---
-![alt text](DrawToolDemo.png)
-
+<p align="center">
+    <img src="demoMedia/DrawToolDemo.png" width="1000">
+</p>
+Annotate code like a textbook—Markdown notes, freehand drawings, shapes, images, and layers, all without modifying your source files.
 
 ---
 ## Table of Contents
 
-- What is CodeNotes?
-- Demo
-- Features
-- Architecture
-- Quick Start
-- Installation
-- Development
-- Tech Stack
-- Data Format
-- Settings
-- Keyboard Shortcuts
-- Roadmap
-- Known Limitations
-- License
-
+- [What is CodeNotes?](#what-is-codenotes)
+- [Demo](#demo)
+- [Why CodeNotes Exists](#why-codenotes-exists)
+- [Features](#features)
+- [Architecture Overview](#architecture-overview)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Development](#development)
+- [Tech Stack](#tech-stack)
+- [Data Format](#data-format)
+- [Extension Settings](#extension-settings)
+- [Keyboard Shortcuts](#keyboard-shortcuts)
+- [Roadmap](#roadmap)
+- [Known Limitations](#known-limitations)
+- [Credits](#credits)
+- [License](#license)
 ---
 ## What is CodeNotes?
 
