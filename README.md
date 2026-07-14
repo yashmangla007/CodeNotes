@@ -8,7 +8,28 @@
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](#)
 
 ---
+![alt text](DrawToolDemo.png)
 
+
+---
+## Table of Contents
+
+- What is CodeNotes?
+- Demo
+- Features
+- Architecture
+- Quick Start
+- Installation
+- Development
+- Tech Stack
+- Data Format
+- Settings
+- Keyboard Shortcuts
+- Roadmap
+- Known Limitations
+- License
+
+---
 ## What is CodeNotes?
 
 CodeNotes is a VS Code extension with two complementary annotation tools that work entirely within your editor, never modifying your source files:
@@ -21,13 +42,10 @@ All annotations are stored in a `.codenotes/` folder inside your workspace, comp
 ---
 
 ## Demo
-
-> *Replace the placeholders below with screenshots or GIF recordings.*
-
 | Hover Notes | Draw Mode |
 |---|---|
-| `[screenshot: hover tooltip with rendered Markdown]` | `[screenshot: freehand pen strokes over TypeScript code]` |
-| `[screenshot: CodeNotes sidebar grouped by file]` | `[screenshot: shapes and text annotation with layers panel]` |
+| ![HoverNotes Demo Image](HoverNoteDemo.png) | ![Explanotory Drawings over the Code](DrawToolDemo-1.png) |
+| ![Side bar CodeNotes File Listings](sideBarNotes.png) | ![Drawings and Shapes over your Code](annotationShowcase.png) |
 
 ---
 
@@ -136,7 +154,7 @@ All writes go through `vscode.workspace.fs.writeFile` targeting only the `.coden
 ### Run from source (Extension Development Host)
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/yashmangla007/CodeNotes.git
 cd CodeNotes/codenotes-extension
 npm install
 npm run compile
