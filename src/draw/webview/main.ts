@@ -147,6 +147,9 @@ window.addEventListener("message", (event: MessageEvent) => {
 
   switch (msg.type) {
     case "init": {
+      // Dismiss any stale save-failure toast from a previous session
+      // so it does not persist when the webview is re-initialized.
+      dismissActiveToast();
       try {
         currentLanguageId = msg.languageId;
         baseAssetUri = msg.baseAssetUri || "";

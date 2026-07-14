@@ -22,21 +22,37 @@ export class TextTool {
   private spawnX = 0;
   private spawnY = 0;
   private spawnWidth = 0;
+  /** pointerId of the active pen-type pointer (for palm rejection, TRD §6.3) */
+  private activePenPointerId: number | null = null;
 
   constructor(private readonly engine: CanvasEngine) {}
 
   attach(canvas: HTMLCanvasElement): void {
     canvas.addEventListener("pointerdown", this.onPointerDown);
+    canvas.addEventListener("pointerup", this.onPointerUp);
+    canvas.addEventListener("pointercancel", this.onPointerCancel);
   }
 
   detach(canvas: HTMLCanvasElement): void {
     canvas.removeEventListener("pointerdown", this.onPointerDown);
+    canvas.removeEventListener("pointerup", this.onPointerUp);
+    canvas.removeEventListener("pointercancel", this.onPointerCancel);
     this.commitCurrentEdit();
   }
 
   private readonly onPointerDown = (e: PointerEvent): void => {
     // Only handle primary click
     if (!e.isPrimary) return;
+
+    // Palm rejection (TRD §6.3):
+    // If a pen is currently active, ignore new touch pointers.
+    if (e.pointerType === "touch" && this.activePenPointerId !== null) {
+      return;
+    }
+    // Track the active pen pointer for palm rejection.
+    if (e.pointerType === "pen") {
+      this.activePenPointerId = e.pointerId;
+    }
 
     // If already editing, commit first
     if (this.activeTextarea) {
@@ -57,6 +73,20 @@ export class TextTool {
     }
 
     e.preventDefault();
+  };
+
+  private readonly onPointerUp = (e: PointerEvent): void => {
+    // Clear the active pen pointer when the pen is lifted (TRD §6.3)
+    if (e.pointerType === "pen" && e.pointerId === this.activePenPointerId) {
+      this.activePenPointerId = null;
+    }
+  };
+
+  private readonly onPointerCancel = (e: PointerEvent): void => {
+    // Clear on cancel as well
+    if (e.pointerType === "pen" && e.pointerId === this.activePenPointerId) {
+      this.activePenPointerId = null;
+    }
   };
 
   /**
