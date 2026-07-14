@@ -1,0 +1,170 @@
+{
+  "name": "codenotes",
+  "displayName": "CodeNotes — A Layer of Knowledge Over Your Code",
+  "description": "Attach hover notes to any line of code without touching your source files. Notes survive edits via content-based anchoring and live in a separate .codenotes/ folder.",
+  "version": "0.1.0",
+  "publisher": "codenotes-dev",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Education",
+    "Visualization"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "codenotes.addNote",
+        "title": "CodeNotes: Add Note",
+        "icon": "$(note)"
+      },
+      {
+        "command": "codenotes.editNote",
+        "title": "CodeNotes: Edit Note (Markdown)",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "codenotes.deleteNote",
+        "title": "CodeNotes: Delete Note",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "codenotes.toggleVisibility",
+        "title": "CodeNotes: Toggle Notes Visibility"
+      },
+      {
+        "command": "codenotes.revealNote",
+        "title": "CodeNotes: Reveal Note in Editor"
+      },
+      {
+        "command": "codenotes.refreshTree",
+        "title": "CodeNotes: Refresh Notes List",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "codenotes.draw.toggle",
+        "title": "CodeNotes: Toggle Draw Mode",
+        "icon": "$(paintcan)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "codenotes.addNote",
+          "group": "codenotes@1",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "codenotes.editNote",
+          "group": "codenotes@2",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "codenotes.deleteNote",
+          "group": "codenotes@3",
+          "when": "editorTextFocus"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "codenotes.refreshTree",
+          "when": "view == codenotesExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "codenotes.toggleVisibility",
+          "when": "view == codenotesExplorer",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "codenotes.draw.toggle",
+          "when": "resourceScheme == file",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "codenotes.addNote",
+        "key": "ctrl+alt+n",
+        "mac": "cmd+alt+n",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "codenotes.editNote",
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "codenotes.toggleVisibility",
+        "key": "ctrl+alt+h",
+        "mac": "cmd+alt+h"
+      },
+      {
+        "command": "codenotes.draw.toggle",
+        "key": "ctrl+alt+d",
+        "mac": "cmd+alt+d"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "codenotesExplorer",
+          "name": "CodeNotes"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "CodeNotes",
+      "properties": {
+        "codenotes.anchorSearchWindow": {
+          "type": "number",
+          "default": 60,
+          "description": "How many lines above/below the last known position to search when re-anchoring a note whose line has moved."
+        },
+        "codenotes.showGutterIcon": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a gutter icon next to lines that have a note."
+        }
+      }
+    },
+    "customEditors": [
+      {
+        "viewType": "codenotes.drawEditor",
+        "displayName": "CodeNotes Draw Mode",
+        "selector": [
+          {
+            "filenamePattern": "*"
+          }
+        ],
+        "priority": "option"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile:host": "tsc -p ./",
+    "compile:webview": "esbuild src/draw/webview/main.ts --bundle --outfile=out/webview/main.js --format=iife --platform=browser --target=es2020 --sourcemap",
+    "compile": "npm run compile:host && npm run compile:webview",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.28.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "perfect-freehand": "^1.2.3"
+  }
+}
