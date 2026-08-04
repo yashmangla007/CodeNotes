@@ -5,7 +5,8 @@
   "version": "0.1.0",
   "publisher": "codenotes-dev",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.85.0",
+    "node": ">=18"
   },
   "categories": [
     "Other",
