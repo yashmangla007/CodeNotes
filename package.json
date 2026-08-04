@@ -155,11 +155,14 @@
     "compile:host": "tsc -p ./",
     "compile:webview": "esbuild src/draw/webview/main.ts --bundle --outfile=out/webview/main.js --format=iife --platform=browser --target=es2020 --sourcemap",
     "compile": "npm run compile:host && npm run compile:webview",
-    "watch": "tsc -watch -p ./"
+    "watch:host": "tsc -watch -p ./",
+    "watch:webview": "esbuild src/draw/webview/main.ts --bundle --outfile=out/webview/main.js --format=iife --platform=browser --target=es2020 --sourcemap --watch",
+    "watch": "concurrently --kill-others --names host,webview \"npm run watch:host\" \"npm run watch:webview\""
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@types/vscode": "^1.85.0",
+    "concurrently": "^10.0.4",
     "esbuild": "^0.28.1",
     "typescript": "^5.3.3"
   },
