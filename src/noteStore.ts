@@ -174,10 +174,18 @@ export class NoteStore implements vscode.Disposable {
     this._onDidChange.fire();
   }
 
-  dispose(): void {
-    for (const timer of this.saveTimers.values()) {
+  async dispose(): Promise<void> {
+    for (const [key, timer] of this.saveTimers) {
       clearTimeout(timer);
+      // Flush the pending write before discarding the timer (P1-012).
+      const folder = vscode.workspace.workspaceFolders?.find(
+        (f) => f.uri.toString() === key
+      );
+      if (folder) {
+        await this.persist(folder);
+      }
     }
+    this.saveTimers.clear();
     this._onDidChange.dispose();
   }
 }

@@ -8,8 +8,14 @@ import { makeAnchorText, resolveNoteLine } from "./anchor";
 import { registerDrawMode } from "./draw/drawCommands";
 import { DrawStore } from "./draw/drawStore";
 
+// Module-level store references held so deactivate() can await their disposal
+// and flush any pending debounced saves before the extension host exits.
+let _noteStore: NoteStore | undefined;
+let _drawStore: DrawStore | undefined;
+
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   const store = new NoteStore();
+  _noteStore = store;
   await store.initialize();
 
   const decorations = new DecorationManager(context, store);
@@ -135,6 +141,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   );
 
   const drawStore = new DrawStore();
+  _drawStore = drawStore;
   await drawStore.initialize();
 
   context.subscriptions.push(drawStore);
@@ -145,6 +152,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   registerDrawMode(context, drawStore);
 }
 
-export function deactivate(): void {
-  // NoteStore and DecorationManager are disposed via context.subscriptions.
+export async function deactivate(): Promise<void> {
+  // Explicitly await both stores so pending debounced saves are flushed
+  // before the extension host exits (P1-011 / P1-012).
+  // context.subscriptions disposes them synchronously and cannot await;
+  // deactivate() is the only hook VS Code actually awaits on graceful close.
+  await _noteStore?.dispose();
+  await _drawStore?.dispose();
 }
